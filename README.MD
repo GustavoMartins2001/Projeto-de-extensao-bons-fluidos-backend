@@ -24,7 +24,8 @@ Body: <br>
 {
   "name": "Nome do Usuário",
   "email": "email@exemplo.com",
-  "password": "senha123"
+  "password": "senha123",
+  "superUser": 1,
 }
 ```
 <br>
