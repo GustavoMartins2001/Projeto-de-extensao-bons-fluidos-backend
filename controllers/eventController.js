@@ -2,7 +2,6 @@ const { Event, User } = require('../models');
 
 exports.create = async (req, res) => {
 
-    console.log(req.body);
     const { date, description, participants } = req.body;
 
     if (!date || !description || !participants) {
@@ -64,6 +63,27 @@ exports.list = async (req, res) => {
     }
 };
 
+exports.getById = async (req, res) => {
+    try {
+        const { id } = req.query
+        const event = await Event.findByPk(id, {
+            include: [{
+                model: User
+            }]
+        });
+        
+
+        if (event == null || event == undefined) {
+            return res.status(404).json({ error: "evento não encontrado." });
+        }
+
+        res.status(200).json(event);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao listar eventos." });
+    }
+};
+
 exports.destroy = async (req, res) => {
     const { id } = req.params;
 
@@ -102,9 +122,11 @@ exports.update = async (req, res) => {
         event.description = description;
         await event.save();
 
+        const ids = participants.map(participant => participant.id);
+
         const users = await User.findAll({
             where: {
-                id: participants
+                id: ids
             }
         });
 
