@@ -1,6 +1,8 @@
 const { Event, User } = require('../models');
 
 exports.create = async (req, res) => {
+
+    console.log(req.body);
     const { date, description, participants } = req.body;
 
     if (!date || !description || !participants) {
@@ -13,9 +15,11 @@ exports.create = async (req, res) => {
             description
         });
 
+        const ids = participants.map(participant => participant.id);
+
         const users = await User.findAll({
             where: {
-                id: participants
+                id: ids
             }
         });
 
