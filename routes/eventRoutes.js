@@ -4,10 +4,10 @@ const authenticateToken = require('../middlewares/authenticateToken');
 
 const router = express.Router();
 
-router.post('/create', authenticateToken, create);
-router.get('/getById', authenticateToken, getById);
-router.get('/list', authenticateToken, list);
-router.delete('/delete/:id', authenticateToken, destroy);
-router.put('/update/:id', authenticateToken, update);
+router.post('/create', authenticateToken("user"), create);
+router.get('/getById', authenticateToken("user"), getById);
+router.get('/list', authenticateToken("user"), list);
+router.delete('/delete/:id', authenticateToken("user"), destroy);
+router.put('/update/:id', authenticateToken("user"), update);
 
 module.exports = router;

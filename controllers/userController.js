@@ -2,8 +2,6 @@ const bcrypt = require('bcryptjs');
 const { User, UserContact } = require('../models');
 
 exports.register = async (req, res) => {
-    console.log(req.body)
-    console.log(req.headers)
     const { name, email, password, superUser, supporter, contact, whatsapp } = req.body;
 
     if (!email || !password) {
